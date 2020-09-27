@@ -72,15 +72,13 @@ while not exit_program:
     # Scores are printed
     print(scores)
     # Get the key of action in the scores dict with the highest value. This is the action to choose
-    next_move = max(scores, key = lambda k: scores[k])
-    print(next_move)
-    exit_program = True
-
+    next_action = max(scores, key = lambda k: scores[k])
+    print(next_action)
 
     # END OF YOUR CODE
 
     if action_taken:
-        (board, score), reward, done = env.step(action)
+        (board, score), reward, done = env.step(next_action)
         action_taken = False
 
 env.close()
