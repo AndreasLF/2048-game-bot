@@ -71,6 +71,9 @@ while not exit_program:
 
     # Scores are printed
     print(scores)
+    # Get the key of action in the scores dict with the highest value. This is the action to choose
+    next_move = max(scores, key = lambda k: scores[k])
+    print(next_move)
     exit_program = True
 
 
