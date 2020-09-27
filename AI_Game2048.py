@@ -20,8 +20,8 @@ import pygame
 # action_taken = False
 
 saved_scores = []
-amount_of_simulations = 2
-number_of_tests = 5
+number_of_simulations = 1
+number_of_tests = 2
 
 for i in range(number_of_tests):
     env = Game2048()
@@ -59,7 +59,7 @@ for i in range(number_of_tests):
         # Loops thorugh possible actions
         for first_action in actions:
             # Loops through a desired amount of games for each initial move
-            for n in range(amount_of_simulations):
+            for n in range(number_of_simulations):
                 # A Game2048 object is created with the current state of the game
                 # With this object we will "search" for the best solution for our next move by going randomly through the steps
                 simulation = Game2048((env.board, env.score))
@@ -97,3 +97,10 @@ for i in range(number_of_tests):
             action_taken = False
 
 env.close()
+
+# Write data to a csv file
+with open("montecarlo"+ str(number_of_simulations) + "sims" + ".csv", "a") as file:
+    # Loop through the saved scores and write them to the file seperated by ","
+    for score in saved_scores:
+        file.write("%s, " % score)
+    file.close()
