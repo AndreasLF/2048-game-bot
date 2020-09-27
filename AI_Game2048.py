@@ -43,31 +43,33 @@ while not exit_program:
     # INSERT YOUR CODE HERE
 
     # Dictionairy to contain scores for each first step
-    scores = {}
+    scores = {'left': 0, 'right': 0, 'up': 0, 'down': 0}
 
-    # Loops thorugh possible actions
-    for first_action in actions:
-        # A Game2048 object is created with the current state of the game
-        # With this object we will "search" for the best solution for our next move by going randomly through the steps
-        simulation = Game2048((env.board, env.score))
+    # Loops through a desired amount of games for each initial move
+    for n in range(20):
+        # Loops thorugh possible actions
+        for first_action in actions:
+            # A Game2048 object is created with the current state of the game
+            # With this object we will "search" for the best solution for our next move by going randomly through the steps
+            simulation = Game2048((env.board, env.score))
 
-        # Takes the first step
-        (board, score), reward, done = simulation.step(first_action)
+            # Takes the first step
+            (board, score), reward, done = simulation.step(first_action)
 
-        # Loops until the simulation hits game over. Done takes the value of game_over in the Game2048 object
-        while not done:
-            # Picks a random action from the actions list
-            action = actions[np.random.randint(4)]
-            # The step is performed
-            (board, score), reward, done = simulation.step(action)
+            # Loops until the simulation hits game over. Done takes the value of game_over in the Game2048 object
+            while not done:
+                # Picks a random action from the actions list
+                action = actions[np.random.randint(4)]
+                # The step is performed
+                (board, score), reward, done = simulation.step(action)
 
-            if done:
-                # Adds the score to the scores dictionairy
-                scores[first_action] = score
+                if done:
+                    # Adds the score to the scores dictionairy
+                    scores[first_action] += score
 
-            action_taken = True
+                action_taken = True
 
-    # Scores are printed from each random game and program is terminated
+    # Scores are printed
     print(scores)
     exit_program = True
 
