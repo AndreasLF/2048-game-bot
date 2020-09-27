@@ -13,15 +13,12 @@ from Game2048 import Game2048
 import numpy as np
 import pygame
 
-# env = Game2048()
-# env.reset()
-# actions = ['left', 'right', 'up', 'down']
-# exit_program = False
-# action_taken = False
-
+# List to save scores
 saved_scores = []
-number_of_simulations = 1
-number_of_tests = 2
+# Amount of simulations to make for each direction, before deciding which direction is the best
+number_of_simulations = 10
+# Sample size
+number_of_tests = 30
 
 for i in range(number_of_tests):
     env = Game2048()
@@ -29,8 +26,9 @@ for i in range(number_of_tests):
     actions = ['left', 'right', 'up', 'down']
     exit_program = False
     action_taken = False
+
+    print("Game " + str(i+1))
     while not exit_program:
-        env.render()
 
         # Process game events
         for event in pygame.event.get():
@@ -49,9 +47,6 @@ for i in range(number_of_tests):
                     action, action_taken  = 'left', True
                 if event.key == pygame.K_r:
                     env.reset()
-
-
-        # INSERT YOUR CODE HERE
 
         # Dictionairy to contain scores for each first step
         scores = {'left': 0, 'right': 0, 'up': 0, 'down': 0}
@@ -80,19 +75,14 @@ for i in range(number_of_tests):
 
                     action_taken = True
 
-        # Scores are printed
-        print(scores)
         # Get the key of action in the scores dict with the highest value. This is the action to choose
         next_action = max(scores, key = lambda k: scores[k])
-        print(next_action)
-
-        # END OF YOUR CODE
 
         if action_taken:
             (board, score), reward, done = env.step(next_action)
             if done:
                 saved_scores.append(score)
-                print(saved_scores)
+                print(score)
                 exit_program = True
             action_taken = False
 
