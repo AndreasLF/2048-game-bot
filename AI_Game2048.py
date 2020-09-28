@@ -50,7 +50,6 @@ for i in range(number_of_tests):
 
         # Dictionairy to contain scores for each first step
         scores = {'left': 0, 'right': 0, 'up': 0, 'down': 0}
-
         # Loops thorugh possible actions
         for first_action in actions:
             # Loops through a desired amount of games for each initial move
@@ -63,7 +62,8 @@ for i in range(number_of_tests):
                 (board, score), reward, done = simulation.step(first_action)
 
                 # Loops until the simulation hits game over. Done takes the value of game_over in the Game2048 object
-                while not done:
+                # To prevent the game from stalling the board has to change with the initial move before the simulation starts
+                while not done and np.any(board != env.board):
                     # Picks a random action from the actions list
                     action = actions[np.random.randint(4)]
                     # The step is performed
