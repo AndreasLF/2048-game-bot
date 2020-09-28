@@ -13,8 +13,6 @@ from Game2048 import Game2048
 import numpy as np
 import pygame
 
-# List to save scores
-saved_scores = []
 # Amount of simulations to make for each direction, before deciding which direction is the best
 number_of_simulations = 10
 # Sample size
@@ -81,16 +79,15 @@ for i in range(number_of_tests):
         if action_taken:
             (board, score), reward, done = env.step(next_action)
             if done:
-                saved_scores.append(score)
                 print(score)
+
+                # Write data to a csv file
+                with open("montecarlo"+ str(number_of_simulations) + "sims" + ".csv", "a") as file:
+                    # Loop through the saved scores and write them to the file seperated by ","
+                    file.write("%s, " % score)
+                    file.close()
+
                 exit_program = True
             action_taken = False
 
 env.close()
-
-# Write data to a csv file
-with open("montecarlo"+ str(number_of_simulations) + "sims" + ".csv", "a") as file:
-    # Loop through the saved scores and write them to the file seperated by ","
-    for score in saved_scores:
-        file.write("%s, " % score)
-    file.close()
